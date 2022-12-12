@@ -15,7 +15,7 @@ class CategoryViewSet(ModelViewSet):
 
 
 class ProductViewSet(ModelViewSet):
-    queryset = Product.objects.all()
+    queryset = Product.objects.all().order_by('id')
     serializer_class = ProductSerializer
     filterset_class = ProductFilter
     # permission_classes = [IsAdminUser]
