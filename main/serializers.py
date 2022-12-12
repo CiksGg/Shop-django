@@ -18,3 +18,4 @@ class ProductSerializer(ModelSerializer):
         rep['category'] = CategorySerializer(instance.category).data
         rep['comments'] = CommentSerializer(instance.comments.all(), many=True).data
         return rep
+        
