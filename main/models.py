@@ -5,6 +5,9 @@ from django.db import models
 class Category(models.Model):
     title = models.CharField(max_length=100)
 
+    class Meta:
+        verbose_name_plural = 'Categories'
+
     def __str__(self):
         return self.title
 
@@ -18,3 +21,16 @@ class Product(models.Model):
 
     def __str__(self):
         return f'[{self.category}] -> {self.title}'
+
+    @property
+    def average_rating(self):
+        ratings = self.ratings.all()
+        values = []
+        for rating in ratings :
+            values.append(rating.value)
+        if values:
+            return sum(values) / len(values)
+        return 0
+
+    class Meta:
+        ordering = ['id']

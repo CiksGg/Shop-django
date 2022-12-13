@@ -7,6 +7,8 @@ from rest_framework.response import Response
 from .serializers import CategorySerializer, ProductSerializer
 from .models import Category, Product
 from .filters import ProductFilter
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 
 class CategoryViewSet(ModelViewSet):
@@ -15,7 +17,7 @@ class CategoryViewSet(ModelViewSet):
 
 
 class ProductViewSet(ModelViewSet):
-    queryset = Product.objects.all()
+    queryset = Product.objects.all().order_by('id')
     serializer_class = ProductSerializer
     filterset_class = ProductFilter
     # permission_classes = [IsAdminUser]
@@ -29,7 +31,9 @@ class ProductViewSet(ModelViewSet):
         
         return [IsAdminUser()]
 
-    
+    @swagger_auto_schema(manual_parameters=[
+        openapi.Parameter('q',openapi.IN_QUERY, type=openapi.TYPE_STRING)
+    ])
     @action(['GET'], detail=False)
     def search(self, requests):
         # /products/search/?q=hello
