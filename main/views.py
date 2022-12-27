@@ -26,7 +26,7 @@ class ProductViewSet(ModelViewSet):
 
     def get_permissions(self):
         if self.action in ['retrieve', 'list', 'search']:
-            # если это запрос га листинг или детализацию
+            # если это запрос на листинг или детализацию
             return [] # разрешаем всем
         
         return [IsAdminUser()]
